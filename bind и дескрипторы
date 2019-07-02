@@ -1,0 +1,51 @@
+function User(fullName) {
+  this.fullName = fullName;
+}
+
+var vasya = new User("Василий Попкин");
+
+Object.defineProperties(vasya, {
+   firstName: {
+      writable: true,
+      enumerable: true,
+      configurable: true,
+      get: function() {
+         return this.fullName.split(' ')[0]
+      },
+      set: function(value) {
+         this.fullName.split(' ')[0] = value
+      }
+   }, 
+   lastName: {
+      writable: true,
+      enumerable: true,
+      configurable: true,
+      get: function() {
+         return this.fullName.split(' ')[1]
+      },
+      set: function(value) {
+         this.fullName.split(' ')[1] = value
+      }   
+   }
+})
+
+
+/*
+ this берется из замыкания
+*/
+Function.prototype.bind = (...argsOuter) => (...argsInside) => {
+   let [ctx, ...arg1] = argsOuter;
+   
+   return this.apply(ctx, arg1.concat(argsInside));
+}
+
+/*
+ Правильный вариант
+*/
+Function.prototype.bind = function(...argsOuter) {
+   return (...argsInside) => {   
+      let [ctx, ...arg1] = argsOuter;
+   
+      return this.apply(ctx, arg1.concat(argsInside));
+      }
+}
