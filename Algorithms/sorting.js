@@ -105,3 +105,40 @@ const coctailSort = (arr = []) => {
    
    return arr;
 }
+
+
+/*
+ Сортировка вставками
+ Минимальные элементы перегоняются в начало
+*/
+
+//в стиле сортировки пузырьком
+const insertionSort = (arr = []) => {
+   for(let i = 1, length = arr.length; i < length; ++i) {
+      
+      for(let j = i; j > 0; --j) {
+         if ( arr[j] < arr[j - 1] ) {
+            [ arr[j], arr[j - 1] ] = [ arr[j - 1], arr[j] ];
+         }
+      }
+      
+   }
+   
+   return arr;
+}
+
+const insertionSort = (arr = []) => {
+   for(let i = 1, length = arr.length; i < length; ++i) {
+      let current = arr[i];
+      let j = i;
+      
+      while( j > 0 && current < arr[j - 1] ) {
+         arr[j] = arr[j - 1];
+         --j;
+      }
+      
+      arr[j] = current;
+   }
+   
+   return arr;
+}
