@@ -1,0 +1,13 @@
+body {
+    text-align: center;  
+}
+
+.image {
+   width: 70%;
+}
+
+@media (max-width: 798px) {
+   .image {
+      width: 100%;
+   }
+}
