@@ -6,8 +6,27 @@ body {
    width: 70%;
 }
 
-@media (max-width: 798px) {
+.navigation {
+   justify-content: space-around;
+   display: flex;
+}
+
+@media (max-width: 768px) {
    .image {
       width: 100%;
    }
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+nav {
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 14px
+    }
 }
