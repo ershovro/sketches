@@ -106,6 +106,13 @@ const coctailSort = (arr = []) => {
    return arr;
 }
 
+/*
+
+var start = Date.now();coctailSort(Array(90000).fill(8));
+ var end = Date.now() - start; console.log(end)
+ //end = 4
+*/
+
 
 /*
  Сортировка вставками
@@ -212,6 +219,13 @@ var selectionSort = (arr = []) => {
    return arr;
 }
 
+/*
+var start = Date.now(); selectionSort(Array(90000).fill(8));
+ var end = Date.now() - start;
+ //end = 84223
+ 
+ На компе цикл в 10^6 итераций работает за 10мс
+*/
 
 /*
  Сортировка расческой.
@@ -247,5 +261,67 @@ const combSort = (arr = []) => {
 
 /*
  Быстрая сортировка
+ Сложность 
+    O( n^2 ) в худшем случае. Высота стека = n и на каждом уровне работа с n элементами
+    O( n *log(n) ) в среднем случае. Высота стека = log(n)
+ Важен выбор опорного элемента - подойдёт любой, кроме первого
 */
 
+/*
+ Выбор опорного индекса от 1 до length - 2: не первый и не последний (если длина >= 3)
+*/
+var calculatePivotIndex = (length) => {
+   let a = 1, b = length - 2;
+   
+   return Math.round( a - 0.5 + Math.random() * (b - a + 1) );   
+}
+
+/*
+ Проверка для length = 4, что опорные индексы выбираются с одинаковой вероятностью
+let results = {
+   1: 0,
+   2: 0
+}
+
+for(let i = 0; i < 100000; ++i) {
+   let pivot = calculatePivotIndex(4);
+   
+   results[pivot] = results[pivot] + 1 || 1;
+}д
+*/
+
+const quickSort = (arr = []) => {
+   let l = arr.length;
+   
+   if (l < 2) {
+      return arr;
+   }
+   
+   let pivotIndex = calculatePivotIndex(l), pivot = arr[pivotIndex], less = [], greater = [];
+   
+   for(let i = 0; i < l; ++i) {
+      if (i === pivotIndex) {
+         continue;
+      }
+      
+      let value = arr[i];
+      
+      if (value < pivot) { 
+         less.push(value);
+      } else {
+         greater.push(value);
+      }
+   }
+   
+   return [...quickSort(less), pivot, ...quickSort(greater)];
+}
+
+
+
+/*
+ Сравнение сортировки выбором и быстрой
+*/
+д
+let start = Date.now();
+
+quickSort([]) 

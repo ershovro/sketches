@@ -219,3 +219,13 @@ var reverseString = function(s = []) {
     
     return s;
 };
+
+
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var findDuplicates = function(nums) {
+    
+};
