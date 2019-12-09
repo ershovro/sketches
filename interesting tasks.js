@@ -229,3 +229,80 @@ var reverseString = function(s = []) {
 var findDuplicates = function(nums) {
     
 };
+
+
+/*
+ Binary Watch
+ 
+ A binary watch has 4 LEDs on the top which represent the hours (0-11), 
+ and the 6 LEDs on the bottom represent the minutes (0-59).
+
+ Each LED represents a zero or one, with the least significant bit on the right.
+ Given a non-negative integer n which represents the number of LEDs that are currently on, 
+ return all possible times the watch could represent.
+*/
+const readBinaryWatch = function(num = 0) {
+   const
+      limitLedH = 4,
+      limitLedM = 6;
+      
+   let ledCombination = generateLedCombination(num);
+   let times = [];
+   
+   for(let i = 0, l = ledCombination.length; i < l; ++i) {
+      let [ledH, ledM] = ledCombination[i].split(',');
+      let hours = [], minutes = [];
+      
+      generateBinaryNumberWithLimitUnits('', 0, limitLedH, +ledH, hours);
+      generateBinaryNumberWithLimitUnits('', 0, limitLedM, +ledM, minutes);
+      
+      for(let j = 0, hoursLength = hours.length; j < hoursLength; ++j) {
+      
+         for(let k = 0, minutesLength = minutes.length; k < minutesLength; ++k) {
+            let h = parseInt( hours[j], 2), m = parseInt( minutes[k], 2);
+            
+            if ( (h >=0 && h <= 11) && (m >=0 && m <=59) ) {
+               times.push(
+                  `${h}:${ addLeadingZeroToMinutes(m) }`
+               );
+            }
+         }
+      }
+   }
+   
+   return times;
+};
+
+const generateLedCombination = (n) => {
+   const
+      limitLedH = 4,
+      limitLedM = 6;
+   
+   let combinations = [];
+   
+   for(let i = 0, end = Math.min(n, limitLedH); i <= end; ++i) {
+      let h = i, m = n - i;
+      
+      if (m > limitLedM) {
+         continue;
+      }
+      
+      combinations.push(`${h},${m}`);
+   }
+   
+   return combinations;
+}
+
+const generateBinaryNumberWithLimitUnits = (cur = '', curUnits = 0, length, limitUnits, result) => {
+   if (cur.length === length) {
+      if (curUnits === limitUnits) {
+         result.push(cur);
+      }
+      return;
+   }
+
+   generateBinaryNumberWithLimitUnits(cur + '0', curUnits, length, limitUnits, result);
+   generateBinaryNumberWithLimitUnits(cur + '1', curUnits + 1, length, limitUnits, result);
+}
+
+const addLeadingZeroToMinutes = (m) => m.toString().length === 1 ? `0${m}`: `${m}`

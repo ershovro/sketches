@@ -270,7 +270,7 @@ const combSort = (arr = []) => {
 /*
  Выбор опорного индекса от 1 до length - 2: не первый и не последний (если длина >= 3)
 */
-var calculatePivotIndex = (length) => {
+const calculatePivotIndex = (length) => {
    let a = 1, b = length - 2;
    
    return Math.round( a - 0.5 + Math.random() * (b - a + 1) );   
@@ -287,7 +287,7 @@ for(let i = 0; i < 100000; ++i) {
    let pivot = calculatePivotIndex(4);
    
    results[pivot] = results[pivot] + 1 || 1;
-}д
+}
 */
 
 const quickSort = (arr = []) => {
