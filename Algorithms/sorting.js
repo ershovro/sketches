@@ -325,3 +325,111 @@ const quickSort = (arr = []) => {
 let start = Date.now();
 
 quickSort([]) 
+
+
+Топ:
+
+Расческой:
+ 84 ms, faster than 97.75%
+ 40.6 MB, less than 100.00% 
+ 
+быстрая: (должна лидировать, нужно улучшить)
+  116 ms, faster than 66.89%
+  56.7 MB, less than 14.29% 
+
+быстрая переделанная(см. ниже):
+ 88 ms, faster than 95.90%
+ 40.6 MB, less than 100.00% 
+ 
+выбором:
+   1364 ms, faster than 17.38%
+   
+гномья:
+ 1-й вар-т - 3000 ms, faster than 11.81%
+ 2-й вар-т - 3908 ms, faster than 7.22%
+ 
+вставками:
+ 1-й вар-т - 3636 ms, faster than 11.03% 
+ 2-й вар-т - 636 ms, faster than 24.12%
+перемешиванием
+   4880 ms, faster than 6.44%
+пузырьком: 
+   1-й вар-т - faster than 5.07%, 6560 ms
+   2-й вар-т faster than 5.07%, 6244 ms
+   
+Вывод: все же сорт. расческой хороша, там и рекурсии нет, и на 4 ms у меня рез-ты получились быстрее
+   
+/*
+ Лучшее решение на leetcode. Но мое отстает не много
+*/
+
+
+var sortArray = function(nums) {
+    // return bubbleSort(nums)
+    // return heapSort(nums)
+    quickSort(nums, 0, nums.length-1)
+    return nums
+};
+
+function quickSort(nums, l, h){
+    if(l>=h){
+        return 
+    }
+    
+    let i=l
+    let j=h
+    const pivot=nums[(i+j)>>1]
+    
+    while(i<j){
+        while(nums[i]<pivot){
+            i++
+        }
+        while(nums[j]>pivot){
+            j--
+        }
+        if(i<j){
+            [nums[i],nums[j]]=[nums[j],nums[i]]
+            i++
+            j--
+        }else if(i==j){
+            i++
+        }
+    }
+    
+    quickSort(nums,l, j)
+    quickSort(nums, i, h)
+}
+
+function heapSort(nums){
+    const len=nums.length
+    
+    for(let i=(len>>1)-1; i>=0; i--){
+        heapify(i, len)
+    }
+    
+    for(let i=0;i<len;i++){
+        [nums[0], nums[len-1-i]]=[nums[len-1-i],nums[0]]
+        heapify(0, len-i-1)
+    }
+    
+    return nums;
+    
+    function heapify(i, limit){
+        const l=i*2+1
+        const r=i*2+2
+        let max=i
+        
+        if(l<limit && nums[l]>nums[max]){
+            max=l
+        }
+        
+        if(r<limit && nums[r]>nums[max]){
+            max=r
+        }
+        
+        if(max!=i){
+            [nums[i], nums[max]]=[nums[max], nums[i]]
+            heapify(max, limit)
+        }
+    }
+}
