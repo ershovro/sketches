@@ -400,6 +400,41 @@ function quickSort(nums, l, h){
     quickSort(nums, i, h)
 }
 
+const quickSort = (arr = [], left, right) => {
+   if (left >= right) {
+      return arr;
+   }
+      
+   let pivot = (left + right) >> 1, greaterNumberCount = 0;
+  
+   for (let i = left; i <= right; ++i) {
+      if (arr[i] >= arr[pivot]) {
+         ++greaterNumberCount;
+      } else {
+         
+         if (pivot === i) {
+            pivot = i - greaterNumberCount;
+         } else if ( pivot === (i - greaterNumberCount) ) {
+            pivot = i;
+         }
+         
+         [arr[i], arr[i - greaterNumberCount]] = [arr[i - greaterNumberCount], arr[i]];
+      }
+   }
+   
+   let newPivotIndex = right - greaterNumberCount + 1;
+   
+   [arr[pivot], arr[newPivotIndex]] = [arr[newPivotIndex], arr[pivot]];
+   
+   pivot = newPivotIndex;
+   
+   quickSort(arr, left, pivot - 1);
+   quickSort(arr, pivot + 1, right);
+   
+   return arr;
+}
+
+
 function heapSort(nums){
     const len=nums.length
     
