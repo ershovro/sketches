@@ -71,3 +71,34 @@ var carry = function(fn) {
 
 
 }
+
+
+
+/*
+ * Пока что лучший вариант разности массивов
+ * Сложность O(n)
+ * Доп память O(n) за счет исзменения arr1 нап месте 
+ * @param {number[]} arr1
+ * @param {number[]} arr2
+ * @param {number[]}  
+ */
+const diff = (arr1 = [], arr2 = []) => {
+   const hashmap = {}, length = arr1.length;
+   let i, numberIntersectionCount = 0;
+   
+   for (let value of arr2) {
+      hashmap[value] = value;
+   }
+     
+   for (i = 0; i < length; ++i) {
+       if (arr1[i] in hashmap) {
+         ++numberIntersectionCount;
+       } else {
+         [arr1[i], arr1[i - numberIntersectionCount]] = [arr1[i - numberIntersectionCount], arr1[i]];
+       }
+   }
+   
+   arr1.length = length - numberIntersectionCount;
+   
+   return arr1;
+}
