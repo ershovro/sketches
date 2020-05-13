@@ -1,0 +1,45 @@
+$light-grey: rgba(229, 229, 229, 1);
+$light: rgba(255, 255, 255, 1);
+$main-font: sans-serif;
+
+@mixin shadow {
+  box-shadow: 3px 3px 8px 1px darken($light-grey, 20%);
+}
+
+@mixin fade-bg($from, $to) {
+  background: $from;
+  background: linear-gradient(to bottom, $from 0%, $to 100%);
+}
+
+@mixin clear {
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root, #root>div {
+  height: 100%;
+  min-height: 100%;
+}
+
+body {
+  @include clear;
+  @include fade-bg($light, $light-grey);
+  font-family: $main-font;
+  font-size: 100%;
+}
+
+h1, h2, h3, h4, h5, h6,
+th, header {
+  @include clear;
+  font-family: $main-font;
+  font-size: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
