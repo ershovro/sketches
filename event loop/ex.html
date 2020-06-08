@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html>
+   <head>
+      <meta charset="utf-8"/>
+      <title>event loop test</title>
+      <style>
+
+          html, body {
+              height: 100%;
+              min-height: 100%;
+          }
+
+          body {
+             margin: 0;
+             padding: 0;
+             background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(229, 229, 229, 1) 100%);
+          }
+
+         #block1 {
+            width: 150px;
+            height: 150px;
+
+            position: absolute;
+            top: 50px;
+
+            background: darkcyan;
+
+            opacity: .5;
+         }
+
+          #block2 {
+             width: 150px;
+             height: 150px;
+
+             position: absolute;
+             top: 300px;
+
+             background: yellowgreen;
+
+             opacity: .5;
+          }
+
+          #block3 {
+             width: 150px;
+             height: 150px;
+
+             position: absolute;
+             top: 550px;
+
+             background: tomato;
+
+             opacity: .5;
+          }
+
+      </style>
+   </head>
+   <body>
+      <button id="btnMove">move to the right</button>
+      <button id="btnStart">start move</button>
+      <button id="btnStop">stop move</button>
+      <button id="btnReset">reset offset</button>
+      <div id="block1"></div>
+      <div id="block2"></div>
+      <div id="block3"></div>
+   <script>
+      /*
+      * 1. timeout
+      * 2. raf
+      * 3. queueMicrotask
+      * */
+       console.log('start');
+
+       let isMove = false;
+       const block1 = document.getElementById('block1');
+       const block2 = document.getElementById('block2');
+       const block3 = document.getElementById('block3');
+       const btnMove = document.getElementById('btnMove');
+       const btnStart = document.getElementById('btnStart');
+       const btnStop = document.getElementById('btnStop');
+       const btnReset = document.getElementById('btnReset');
+       const moveRight = (elem) => {
+          const parentWidth = elem.parentNode.offsetWidth;
+          const width = elem.offsetWidth;
+          let left = parseInt(elem.style.left, 10) || 0;
+
+          if (left + width + 1 > parentWidth) {
+             left = '0px';
+          } else {
+             left = `${left + 1}px`
+          }
+          elem.style.left = left;
+       };
+       const resetOffset = (elem) => {
+          elem.style.left = '0px';
+       };
+       const moveInfinity1 = (block) => {
+          moveRight(block);
+          setTimeout( () => {
+             if (isMove) {
+                moveInfinity1(block)
+             }
+          } );
+       };
+       const moveInfinity2 = (block) => {
+          moveRight(block);
+          requestAnimationFrame( () => {
+             if (isMove) {
+                moveInfinity2(block)
+             }
+          } );
+       };
+      const moveInfinity3 = (block) => {
+         moveRight(block);
+         queueMicrotask( () => {
+            if (isMove) {
+           //    moveInfinity3(block)
+            }
+         } );
+      };
+
+       btnMove.addEventListener('click', () =>
+          [block1, block2, block3].forEach(moveRight)
+       );
+       btnStart.addEventListener('click', () => {
+          isMove = true;
+          moveInfinity1(block1);
+          moveInfinity2(block2);
+          moveInfinity3(block3);
+       });
+       btnStop.addEventListener('click', () => isMove = false );
+       btnReset.addEventListener('click', () =>
+               [block1, block2, block3].forEach(resetOffset)
+       );
+   </script>
+
+   </body>
+</html>
