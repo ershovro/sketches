@@ -1,4 +1,4 @@
-let regex, str;
+let regex, str, replaceWith;
 
 /*
 * Выбрать повторяющиеся слова, которые находятся непосредственно друг под другом.
@@ -22,3 +22,17 @@ console.log(regex.test(str));
 str = ' Extra       spaces';
 regex = /(?:(\.)(?=(\s)))?\s+/g;
 str.replace(regex, '$1$2 ')
+
+/*
+* Преобразовать текст, обрамленный в звездочки, в курсив.
+* Не трогать текст в двойных звездочках (жирный).
+* *this is italic*" => <em>this is italic</em>
+* **bold text (not italic)** => **bold text (not italic)**
+* */
+
+str = '*italic text **with bold** *';
+regex = /(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g;
+replaceWith = '<em>$1</em>';
+console.log(str.replace(regex, replaceWith))
+str = '*italic* **bold** *italic* **bold**';
+console.log(str.replace(regex, replaceWith))
