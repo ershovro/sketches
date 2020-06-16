@@ -33,6 +33,6 @@ str.replace(regex, '$1$2 ')
 str = '*italic text **with bold** *';
 regex = /(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g;
 replaceWith = '<em>$1</em>';
-console.log(str.replace(regex, replaceWith))
+console.log(str.replace(regex, replaceWith));
 str = '*italic* **bold** *italic* **bold**';
-console.log(str.replace(regex, replaceWith))
+console.log(str.replace(regex, replaceWith));
