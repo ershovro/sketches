@@ -130,6 +130,40 @@ var combinationSum = function(candidates, target) {
 };
 
 
+const showCircle = (cx = 100, cy = 100, r = 100, callback = f => f) => {
+   /*
+    .circle {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      border-radius: 50%;
+
+      background-color: red;
+
+      transition-property: width, height, margin-left, margin-top;
+      transition-duration: 3s;
+
+      transform: translateX(-50%) translateY(-50%);
+    }
+   */
+   const circle = document.createElement('div');
+
+   circle.style.top = `${cy}px`;
+   circle.style.left = `${cx}px`;
+   circle.style.width = `0px`;
+   circle.style.height = `0px`;
+   circle.classList.add('circle');
+   circle.addEventListener('transitionend', () => callback(circle));
+
+   document.body.append(circle);
+
+   setTimeout( () => {
+      circle.style.width = `${r * 2}px`;
+      circle.style.height = `${r * 2}px`;
+   }, 0);
+}
+
 
 
 
